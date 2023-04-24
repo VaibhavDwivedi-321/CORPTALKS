@@ -15,7 +15,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
-//telling my app to use sessions which  i have declared above using its documentation
+//telling my app to use sessions which i have declared above using its documentation
 app.use(session({
   secret: "Our little secret.",
   resave: false,
@@ -23,7 +23,7 @@ app.use(session({
 }));
 
 
-//telling my app to use passport
+//telling my app to use and initialize passport
 app.use(passport.initialize());
 //using passport to deal with sessions
 app.use(passport.session());
@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
 });
 
 //using passport local mongoose
+//and to use it we;ve to add it to the mongoose model as a plugin
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -66,7 +67,7 @@ passport.deserializeUser(function(id,done){
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "http://corptalks-feedback-vaibhav.onrender.com/auth/google/secrets",
     userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
